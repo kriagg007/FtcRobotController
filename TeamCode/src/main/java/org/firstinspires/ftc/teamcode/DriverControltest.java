@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="DriverControl", group="Linear Opmode")
-public class DriverControl extends Movement {
+@TeleOp(name="DriverControltest", group="Linear Opmode")
+public class DriverControltest extends Movement {
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -21,13 +21,17 @@ public class DriverControl extends Movement {
             while(true) {
                 // Gamepad 1 controls:
 
+                /*
                 // Left trigger - to move left sideways
                 strafeRight(-gamepad1.right_trigger, 0);
 
                 // Right trigger - to move right sideways
                 strafeLeft(-gamepad1.left_trigger, 0);
 
-                /*shooter.setPower(1);*/
+                shooter.setPower(1);
+
+
+
 
                 // Left stick y - to go forward or backward
                 double drive = -gamepad1.left_stick_y;
@@ -37,54 +41,35 @@ public class DriverControl extends Movement {
 
 
                 double leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-                double rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
 
                 leftFront.setPower(leftPower);
                 leftBack.setPower(leftPower);
-                rightFront.setPower(rightPower);
+                rightFront.setPower(rightPower); */
+                double leftPower = 1;
+                double rightPower   = -gamepad1.left_stick_y;
                 rightBack.setPower(rightPower);
-
-                // left bumper - to close claw (front servo)
-
-                if(gamepad2.a){
-                    intake.setPower(1);
-                }
-
-                if (gamepad2.dpad_up) {
-
-                    arm.setPosition(1);
-                    sleep(100);
-                    telemetry.addData("front servo open", "clawposition: 0.4" );
-                }
-
-                // right bumper - to open claw (front servo)
-                if (gamepad2.dpad_down) {
-
-                    arm.setPosition(0.0);
-                    sleep(100);
-                    telemetry.addData("front servo closed", "clawposition: 0.1" );
-                }
-
-                if (gamepad2.dpad_left) {
-
-                    clamp.setPosition(1);
-                    sleep(100);
-                    telemetry.addData("front servo closed", "clawposition: 0.1" );
-                }
-
-                if (gamepad2.dpad_right) {
-
-                    clamp.setPosition(0.0);
-                    sleep(100);
-                    telemetry.addData("front servo closed", "clawposition: 0.1" );
-                }
 /*
                 // Gamepad 2 Controls
 
                 // Left stick y - to move arm up or down
                 arm.setPower(-gamepad2.left_stick_y*0.66);
 
+                // left bumper - to close claw (front servo)
+                if (gamepad2.left_bumper) {
 
+                    //frontServo.setPosition(0.4);
+                    //sleep(100);
+                    frontServo.setPosition(0.4);
+                    telemetry.addData("front servo open", "clawposition: 0.4" );
+                }
+
+                // right bumper - to open claw (front servo)
+                if (gamepad2.right_bumper) {
+
+                    frontServo.setPosition(0.0);
+                    telemetry.addData("front servo closed", "clawposition: 0.1" );
+                }
 
                 // a - arm target position
 

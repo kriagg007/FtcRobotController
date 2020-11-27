@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -14,13 +15,12 @@ abstract class Movement extends LinearOpMode
     protected DcMotor leftBack;
     protected DcMotor rightBack;
     protected DcMotor shooter;
-/*
-    protected DcMotor shooter;
+    protected DcMotor hopper;
+    protected DcMotor intake;
 
-    protected Servo frontServo;
-    protected Servo rightConstruction;
-    protected Servo leftConstruction;
-*/
+    protected Servo arm;
+    protected Servo clamp;
+
     public void runOpMode() {
         setupDriveMotors();
         runOpModeImpl();
@@ -38,6 +38,8 @@ abstract class Movement extends LinearOpMode
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         shooter = hardwareMap.get(DcMotor.class, "shooter");
+        hopper = hardwareMap.get(DcMotor.class, "hopper");
+        intake = hardwareMap.get(DcMotor.class, "intake");
 
         // Most robots need the motor on one side to be reve`rsed to drive goBackward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -45,14 +47,20 @@ abstract class Movement extends LinearOpMode
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
+        shooter.setDirection(DcMotor.Direction.FORWARD);
+        hopper.setDirection(DcMotor.Direction.FORWARD);
+        intake.setDirection(DcMotor.Direction.FORWARD);
+
+        arm = hardwareMap.servo.get("arm");
+        clamp =  hardwareMap.servo.get("clamp");
+    /*    */
 
         updateTelemetryMessage("Initialized Motors");
 /*
         arm = hardwareMap.get(DcMotor.class, "Arm");
         arm.setDirection(DcMotor.Direction.FORWARD);
 
-        frontServo = hardwareMap.servo.get("frontServo");
-        leftConstruction =  hardwareMap.servo.get("leftConstruction");
+
         rightConstruction = hardwareMap.servo.get("rightConstruction");
 
  */
@@ -67,9 +75,9 @@ abstract class Movement extends LinearOpMode
         updateTelemetryMessage(message);
     }
 
-    public void stopWithSleep(final String message, final long duration) {
-        stop(message);
-        sleep(duration);
+        public void stopWithSleep(final String message, final long duration) {
+            stop(message);
+            sleep(duration);
     }
 
     public void stopWithSleep(final long duration) {
@@ -141,6 +149,35 @@ abstract class Movement extends LinearOpMode
 
         updateTelemetryMessage("Turning Left");
     }
+   public void shooter(final double shooterpower, final int duration) {
+        shooter.setPower(shooterpower);
+        sleep(duration);
+    }
+
+    public void intake(final double intakepower, final int duration){
+        intake.setPower(intakepower);
+        sleep(duration);
+    }
+
+    public void armdown() {
+        arm.setPosition(1);
+        sleep(200);
+    }
+
+    public void armup() {
+        arm.setPosition(0);
+        sleep(200);
+    }
+
+    public void clampdown() {
+        clamp.setPosition(1);
+        sleep(200);
+    }
+
+    public void clampup() {
+        clamp.setPosition(0);
+        sleep(200);
+    }
 /*
     public void armUp(final double armpower, final int duration) {
         arm.setPower(armpower);
@@ -154,15 +191,7 @@ abstract class Movement extends LinearOpMode
     }
 
 
-    public void armClamp() {
-        frontServo.setPosition(0.0);
-        sleep(200);
-    }
 
-    public void armRelease() {
-        frontServo.setPosition(0.4);
-        sleep(200);
-    }
 
 
 
