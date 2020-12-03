@@ -15,7 +15,7 @@ abstract class IntakeClass extends LinearOpMode
     protected DcMotor shooter;
     protected DcMotor hopper;
 
-    protected Servo arm;
+    protected DcMotor arm;
     protected Servo clamp;
 
 
@@ -34,6 +34,9 @@ abstract class IntakeClass extends LinearOpMode
         intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotor.class, "shooter");
         hopper = hardwareMap.get(DcMotor.class, "hopper");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+
+        clamp = hardwareMap.get(Servo.class, "clamp");
 
 
         // Most robots need the motor on one side to be reve`rsed to drive goBackward
@@ -101,14 +104,9 @@ abstract class IntakeClass extends LinearOpMode
         sleep(duration);
     }
 
-    public void armdown() {
-        arm.setPosition(1);
-        sleep(200);
-    }
-
-    public void armup() {
-        arm.setPosition(0);
-        sleep(200);
+    public void arm(final double armpower, final int duration){
+        arm.setPower(armpower);
+        sleep(duration);
     }
 
     public void clampdown() {

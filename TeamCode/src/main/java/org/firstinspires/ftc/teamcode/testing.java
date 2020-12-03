@@ -19,8 +19,6 @@ public class testing extends IntakeClass {
             while(opModeIsActive()) {
                 while(true) {
 
-                    boolean armtrue = true;
-                    boolean clamptrue = true;
 
                     // left bumper - to close claw (front servo)
                     if(gamepad1.a){
@@ -56,38 +54,26 @@ public class testing extends IntakeClass {
 
 
                     //servos
-
-                    if(armtrue) {
-                        if (gamepad1.right_bumper) {
-                            arm.setPosition(1);
-                            sleep(200);
-                            armtrue = false;
-                        }
+                    if (gamepad1.right_bumper) {
+                        arm.setPower(0.2);
+                        sleep(100);
+                        arm.setPower(0);
                     }
 
-                    if(!armtrue) {
-                        if(gamepad1.right_bumper){
-                            arm.setPosition(0);
-                            sleep(200);
-                            armtrue = true;
-                        }
+                    if(gamepad1.left_bumper){
+                        arm.setPower(-0.4);
+                        sleep(100);
+                        arm.setPower(0);
                     }
 
-
-                    if(clamptrue) {
-                        if (gamepad1.left_bumper) {
-                            clamp.setPosition(1);
-                            sleep(200);
-                            clamptrue = false;
-                        }
+                    if (gamepad1.dpad_down) {
+                        clamp.setPosition(.8);
+                        sleep(200);
                     }
 
-                    if(!clamptrue) {
-                        if(gamepad1.left_bumper){
-                            clamp.setPosition(0);
-                            sleep(200);
-                            clamptrue = true;
-                        }
+                    if(gamepad1.dpad_up){
+                        clamp.setPosition(.2);
+                        sleep(200);
                     }
 
                     telemetry.addData("Status", "Run Time: " + runtime.toString());
