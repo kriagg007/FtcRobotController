@@ -46,24 +46,7 @@ public class DriverControl extends Movement {
 
                 // left bumper - to close claw (front servo)
 
-                if(gamepad2.a){
-                    intake.setPower(1);
-                }
 
-                if (gamepad2.dpad_up) {
-
-                    arm.setPosition(1);
-                    sleep(100);
-                    telemetry.addData("front servo open", "clawposition: 0.4" );
-                }
-
-                // right bumper - to open claw (front servo)
-                if (gamepad2.dpad_down) {
-
-                    arm.setPosition(0.0);
-                    sleep(100);
-                    telemetry.addData("front servo closed", "clawposition: 0.1" );
-                }
 
                 if (gamepad2.dpad_left) {
 

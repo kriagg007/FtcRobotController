@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="testing", group="Linear Opmode")
-public class testing extends IntakeClass {
+public class testing extends Movement {
     private ElapsedTime runtime = new ElapsedTime();
 
         @Override
@@ -20,64 +20,55 @@ public class testing extends IntakeClass {
                 while(true) {
 
 
-                    // left bumper - to close claw (front servo)
-                    if(gamepad1.a){
-                        shooter.setPower(1);
-                        while(gamepad1.a){
-                            shooter.setPower(1);
-                        }
-                    }
-                    else {
-                        shooter.setPower(0);
-                    }
-
-                    if(gamepad1.b){
-                        intake.setPower(1);
-                        while(gamepad1.b){
-                            intake.setPower(1);
-                        }
-                    }
-                    else {
-                        intake.setPower(0);
-                    }
-
-                    if(gamepad1.x){
-                        hopper.setPower(1);
-                        while(gamepad1.x){
-                            hopper.setPower(1);
-                        }
-
-                    }
-                    else {
-                        hopper.setPower(0);
-                    }
-
-
                     //servos
-                    if (gamepad1.right_bumper) {
+                    if (gamepad2.right_bumper) {
                         arm.setPower(0.2);
                         sleep(100);
                         arm.setPower(0);
                     }
 
-                    if(gamepad1.left_bumper){
+                    if(gamepad2.left_bumper){
                         arm.setPower(-0.4);
                         sleep(100);
                         arm.setPower(0);
                     }
 
-                    if (gamepad1.dpad_down) {
+                    if (gamepad2.b) {
                         clamp.setPosition(.8);
                         sleep(200);
                     }
 
-                    if(gamepad1.dpad_up){
+                    if(gamepad2.x){
                         clamp.setPosition(.2);
                         sleep(200);
                     }
 
                     telemetry.addData("Status", "Run Time: " + runtime.toString());
                     telemetry.update();
+
+                    // Left trigger - to move left sideways
+                    strafeRight(-gamepad1.right_trigger, 0);
+
+                    // Right trigger - to move right sideways
+                    strafeLeft(-gamepad1.left_trigger, 0);
+
+                    /*shooter.setPower(1);*/
+
+                    // Left stick y - to go forward or backward
+                    double drive = -gamepad1.left_stick_y;
+
+                    // Right stick x - to turn left or right
+                    double turn  = gamepad1.right_stick_x;
+
+
+                    double leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+                    double rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
+                    leftFront.setPower(leftPower);
+                    leftBack.setPower(leftPower);
+                    rightFront.setPower(rightPower);
+                    rightBack.setPower(rightPower);
+
                 }
             }
 

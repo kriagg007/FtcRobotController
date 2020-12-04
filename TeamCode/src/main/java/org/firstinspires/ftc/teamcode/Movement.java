@@ -14,11 +14,8 @@ abstract class Movement extends LinearOpMode
     protected DcMotor rightFront;
     protected DcMotor leftBack;
     protected DcMotor rightBack;
-    protected DcMotor shooter;
-    protected DcMotor hopper;
-    protected DcMotor intake;
+    protected DcMotor arm;
 
-    protected Servo arm;
     protected Servo clamp;
 
     public void runOpMode() {
@@ -37,9 +34,8 @@ abstract class Movement extends LinearOpMode
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");
-        shooter = hardwareMap.get(DcMotor.class, "shooter");
-        hopper = hardwareMap.get(DcMotor.class, "hopper");
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+        clamp = hardwareMap.get(Servo.class, "clamp");
 
         // Most robots need the motor on one side to be reve`rsed to drive goBackward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -47,11 +43,8 @@ abstract class Movement extends LinearOpMode
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
-        shooter.setDirection(DcMotor.Direction.FORWARD);
-        hopper.setDirection(DcMotor.Direction.FORWARD);
-        intake.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
 
-        arm = hardwareMap.servo.get("arm");
         clamp =  hardwareMap.servo.get("clamp");
     /*    */
 
@@ -92,12 +85,13 @@ abstract class Movement extends LinearOpMode
         leftBack.setPower(power);
         sleep(duration);
 
-        updateTelemetryMessage("Going Forward");
+        updateTelemetryMessage("Going Backward");
     }
 
     // Backward is same as forward with reverse power
     public void goForward(final double power, final int duration) {
         goBackward(-power, duration);
+        updateTelemetryMessage("Going Forward");
     }
 
     public void strafeRight(final double power, final int duration) {
@@ -149,33 +143,17 @@ abstract class Movement extends LinearOpMode
 
         updateTelemetryMessage("Turning Left");
     }
-   public void shooter(final double shooterpower, final int duration) {
-        shooter.setPower(shooterpower);
+    public void arm(final double armpower, final int duration){
+        arm.setPower(armpower);
         sleep(duration);
     }
-
-    public void intake(final double intakepower, final int duration){
-        intake.setPower(intakepower);
-        sleep(duration);
-    }
-
-    public void armdown() {
-        arm.setPosition(1);
-        sleep(200);
-    }
-
-    public void armup() {
-        arm.setPosition(0);
-        sleep(200);
-    }
-
     public void clampdown() {
-        clamp.setPosition(1);
+        clamp.setPosition(0.8);
         sleep(200);
     }
 
     public void clampup() {
-        clamp.setPosition(0);
+        clamp.setPosition(0.2);
         sleep(200);
     }
 /*
