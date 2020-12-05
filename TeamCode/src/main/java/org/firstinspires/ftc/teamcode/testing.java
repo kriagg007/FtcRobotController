@@ -21,15 +21,19 @@ public class testing extends Movement {
 
 
                     //servos
-                    if (gamepad2.right_bumper) {
-                        arm.setPower(0.2);
-                        sleep(100);
+                    if(gamepad2.right_bumper) {
+                        arm.setPower(0.5);
+                        sleep(250);
+                        arm.setPower(0.3);
+                        sleep(250);
                         arm.setPower(0);
                     }
 
                     if(gamepad2.left_bumper){
-                        arm.setPower(-0.4);
-                        sleep(100);
+                        arm.setPower(-0.5);
+                        sleep(250);
+                        arm.setPower(-0.5);
+                        sleep(250);
                         arm.setPower(0);
                     }
 
@@ -38,7 +42,7 @@ public class testing extends Movement {
                         sleep(200);
                     }
 
-                    if(gamepad2.x){
+                    if(gamepad2.dpad_up){
                         clamp.setPosition(.2);
                         sleep(200);
                     }
@@ -55,14 +59,14 @@ public class testing extends Movement {
                     /*shooter.setPower(1);*/
 
                     // Left stick y - to go forward or backward
-                    double drive = -gamepad1.left_stick_y;
+                    double drive = gamepad1.left_stick_y;
 
                     // Right stick x - to turn left or right
                     double turn  = gamepad1.right_stick_x;
 
 
-                    double leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-                    double rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+                    double leftPower    = Range.clip(drive + turn, -0.6, 0.6 5) ;
+                    double rightPower   = Range.clip(drive - turn, -0.6, 0.6) ;
 
                     leftFront.setPower(leftPower);
                     leftBack.setPower(leftPower);
