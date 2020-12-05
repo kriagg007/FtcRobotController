@@ -65,7 +65,7 @@ public class testing extends Movement {
                     double turn  = gamepad1.right_stick_x;
 
 
-                    double leftPower    = Range.clip(drive + turn, -0.6, 0.6 5) ;
+                    double leftPower    = Range.clip(drive + turn, -0.6, 0.6) ;
                     double rightPower   = Range.clip(drive - turn, -0.6, 0.6) ;
 
                     leftFront.setPower(leftPower);
